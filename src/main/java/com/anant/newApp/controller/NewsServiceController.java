@@ -20,14 +20,12 @@ public class NewsServiceController {
 	
 	@RequestMapping(value = "/NewsArticle{name}")
 	public JSONObject topicQuery(@RequestParam("name") String name) throws IOException, ParseException{
-	
 		return cacheResponse.topicQuery(name);
 	}
 	
 	
 	@RequestMapping(value = "/Top-Headline")
 	public JSONObject topHeadLines() throws IOException, ParseException {
-		
 		return cacheResponse.topHeadlines();
 	}
 }

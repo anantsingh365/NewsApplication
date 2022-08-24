@@ -9,24 +9,38 @@ import java.net.URL;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class NewsArticle {
 
 	private static final String USER_AGENT = "Mozilla/5.0";
-	private static final String TOP_HEADLINE = "https://newsapi.org/v2/top-headlines?country=us&apiKey=9e3acd0313cc4776945ca6c1d0a2190e";
-	private static final String QUERY_ARTICLES = "https://newsapi.org/v2/everything?q=###Enter-query-here###&apiKey=9e3acd0313cc4776945ca6c1d0a2190e";	
-	
-	public static JSONObject getSearchQuery(String Query) throws IOException, ParseException {
-		String queryString = QUERY_ARTICLES.replaceFirst("###Enter-query-here###",Query);
-		return getNewsApi(queryString);
+
+	private String ApiKey;
+	private String TopHeadLineUrl;
+    private String SearchQueryUrl;
+
+    public NewsArticle(@Value("${NewsOrg.ApiKey}") String ApiKey, @Value("${NewsOrg.TopHeadLineUrl}") String TopHeadLineUrl,
+                       @Value("${NewsOrg.SearchQueryUrl}")String SearchQueryUrl){
+        this.ApiKey = ApiKey;
+        this.TopHeadLineUrl = TopHeadLineUrl;
+        this.SearchQueryUrl = SearchQueryUrl;
+    }
+
+
+	public JSONObject getSearchQuery(String Query) throws IOException, ParseException {
+		String queryString = SearchQueryUrl.replaceFirst("###Enter-query-here###",Query);
+		String queryStringWithKey = queryString.replaceFirst("###API_KEY###", ApiKey);
+		return getNewsApi(queryStringWithKey);
 	}
 	
-	public static JSONObject getTopHeadLines() throws IOException, ParseException {
-		return getNewsApi(TOP_HEADLINE);
+	public JSONObject getTopHeadLines() throws IOException, ParseException {
+		String topHeadLineWithKey = TopHeadLineUrl.replaceFirst("###API_KEY###", ApiKey);
+		return getNewsApi(topHeadLineWithKey);
 	}
 	
-	
-	private static JSONObject getNewsApi(String url) throws IOException, ParseException {
+	private JSONObject getNewsApi(String url) throws IOException, ParseException {
 	
 		JSONObject jo = new JSONObject();
 		URL obj = new URL(url);

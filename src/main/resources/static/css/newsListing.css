@@ -3,3 +3,9 @@
     height: 15vw;
     object-fit: cover;
 }
+
+div.card{
+    border : 2px solid grey;
+    border-radius: 8px;
+    border-padding: 10px;
+    }

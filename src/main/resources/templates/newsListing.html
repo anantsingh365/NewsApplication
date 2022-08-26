@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Title</title><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href = "css/newsListing.css">
+</head>
+
 </head>
 <body>
+<!--<h1 th:inline="text" >-->
+<!--    [[${user}]]-->
+<!--</h1>-->
+<!--<p th:inline="text">[[${source}]]</p>-->
+<!--<p>Title:</p>-->
+<!--<p th:inline="text">[[${title}]]</p>-->
+<!--<p>Here is the Description for the article</p>-->
+<!--<p th:inline="text">[[${description}]]</p>-->
+<!--<p th:inline="text">[[${publisedAt}]]</p>-->
+<!--<p></p>-->
+<!--<p th:inline="text">[[${urlToImage}]]</p>-->
+
+<div class ="card" style="width: 18rem;">
+    <img class="card-img-top" th:src = "@{${urlToImage}}">
+    <div class="card-body">
+        <h5 class = "card-title" th:inline = "text">[[${title}]]</h5>
+        <p class= "card-text" th:inline = "text">[[${description}]]</p>
+        <a th:href = "@{${url}}" class = "btn btn-primary">Read the Full Article</a>
+    </div>
+</div>
+
 
 </body>
 </html>

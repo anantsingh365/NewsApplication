@@ -20,17 +20,14 @@ public class NewsPresentation {
     }
 
     @RequestMapping(value ="/topic{topic}", method = RequestMethod.GET)
-//    @ResponseBody
     public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException {
-        String pageTitle = "Showing Articles for: "+topic;
-        MakeModel.makeModel(newsDataJson.topicQuery(topic), model,pageTitle);
+        MakeModel.newsDataModel(newsDataJson.topicQuery(topic), model,topic);
         return "newsListing";
     }
 
     @RequestMapping(value = "/topHeadLines")
     public String topHeadLines(Model model) throws IOException, ParseException {
-        String pageTitle = "Showing Top Headlines";
-        MakeModel.makeModel(newsDataJson.topHeadLines(), model,pageTitle);
+        MakeModel.newsDataModel(newsDataJson.topHeadLines(), model);
         return "newsListing";
     }
 }

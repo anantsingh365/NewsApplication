@@ -15,7 +15,8 @@ public class MakeModel {
     private String urlToImage;
     private String url;
 
-    public static void makeModel(JSONObject jo, Model model, String pageTitle){
+    public static void newsDataModel(JSONObject jo, Model model, String topic){
+        String pageTitle = "Showing Articles for: "+topic;
         JSONArray joArray = (JSONArray) jo.get("articles");
         JSONObject joArticles;
         List<MakeModel> articles = new ArrayList<>();
@@ -35,6 +36,11 @@ public class MakeModel {
         }
         model.addAttribute("articles",articles);
         model.addAttribute("pageTitle",pageTitle);
+    }
+
+    public static void newsDataModel(JSONObject jo, Model model){
+        String pageTitle = "Showing Top HeadLines";
+        newsDataModel(jo, model, pageTitle);
     }
 
     public MakeModel(){

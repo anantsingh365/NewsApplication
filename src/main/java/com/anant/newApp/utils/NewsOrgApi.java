@@ -28,19 +28,19 @@ public class NewsOrgApi {
         this.SearchQueryUrl = SearchQueryUrl;
     }
 
-
+        //get News JSON data for particular Topic
 	public JSONObject getSearchQuery(String Query) throws IOException, ParseException {
-		String queryString = SearchQueryUrl.replaceFirst("###Enter-query-here###",Query);
+		String queryString = SearchQueryUrl.replaceFirst("###Enter_query_here###",Query);
 		String queryStringWithKey = queryString.replaceFirst("###API_KEY###", ApiKey);
-		return getNewsApi(queryStringWithKey);
+		return getNewsJSON(queryStringWithKey);
 	}
-	
+	    //get News JSON date for TopHeadLines
 	public JSONObject getTopHeadLines() throws IOException, ParseException {
 		String topHeadLineWithKey = TopHeadLineUrl.replaceFirst("###API_KEY###", ApiKey);
-		return getNewsApi(topHeadLineWithKey);
+		return getNewsJSON(topHeadLineWithKey);
 	}
 	
-	private JSONObject getNewsApi(String url) throws IOException, ParseException {
+	private JSONObject getNewsJSON(String url) throws IOException, ParseException {
 	
 		JSONObject jo = new JSONObject();
 		URL obj = new URL(url);

@@ -1,4 +1,4 @@
-package com.anant.newApp.controller;
+package com.anant.newApp.utils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import com.anant.newApp.NewsArticle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,7 +20,7 @@ public class SavedResponse {
 
 	private  int topHeadLineThreshold;
 	private  int savedTopicsThreshold;
-	private NewsArticle newsArticle;
+	private NewsOrgApi newsOrgApi;
 
 	private JSONObject topHeadLineJsonCache;
 
@@ -35,17 +34,17 @@ public class SavedResponse {
 	private int savedTopicMapSize = 0;
 
 	public SavedResponse(@Value("${savedThreshold}") int topHeadLineThreshold,
-						 @Value("${savedThreshold}")int savedTopicsThreshold, @Autowired NewsArticle newsArticle) {
+						 @Value("${savedThreshold}")int savedTopicsThreshold, @Autowired NewsOrgApi newsOrgApi) {
 		this.topHeadLineThreshold = topHeadLineThreshold;
 		this.savedTopicsThreshold = savedTopicsThreshold;
-		this.newsArticle = newsArticle;
+		this.newsOrgApi = newsOrgApi;
 	}
 
 	// Stored already searched topics and their JSON data from NewsApi.org
 	// and only refresh the JSON data when request for already stored query exceeds a threshold.
 	public JSONObject topicQuery(String name) throws IOException, ParseException {
 
-		if(savedTopicMapSize > 1000){
+		if(savedTopicMapSize > 1000 /*any arbitary number for map size, doesn't really mean anything*/){
 			savedTopics.clear();
 			savedTopicsReloadCounter.clear();
 			savedTopicMapSize = 0;
@@ -61,7 +60,7 @@ public class SavedResponse {
 			}else if(savedTopicsReloadCounter.get(name) >= savedTopicsThreshold){
 				// counter exceeds the Threshold, refresh the JSONObject and reset the counter
 				System.out.println("Refreshing the Response and Counter for: "+ name +" currentCounter is " + savedTopicsReloadCounter.get(name));
-				savedTopics.replace(name, newsArticle.getSearchQuery(name));
+				savedTopics.replace(name, newsOrgApi.getSearchQuery(name));
 				savedTopicsReloadCounter.replace(name, 0);
 				System.out.println("Response Refreshed and currenThres for " + name + " is " + savedTopicsReloadCounter.get(name));
 				return savedTopics.get(name);
@@ -69,7 +68,7 @@ public class SavedResponse {
 		}else if(!savedTopics.containsKey(name)){
 			// Query is not saved, add in the Map and set the counter to 0
 			System.out.println("Query not Cached, Adding the Query and initializing the Reload Counter for " + name);
-			savedTopics.put(name, newsArticle.getSearchQuery(name));
+			savedTopics.put(name, newsOrgApi.getSearchQuery(name));
 			savedTopicsReloadCounter.put(name, 0);
 
 			++savedTopicMapSize;
@@ -87,7 +86,7 @@ public class SavedResponse {
 	    System.out.println("Sending first response or refresh response");
 	    initialRequest_topHeadline = false;
 		topHeadLineReloadCounter = 0;
-		topHeadLineJsonCache = newsArticle.getTopHeadLines();
+		topHeadLineJsonCache = newsOrgApi.getTopHeadLines();
 		return topHeadLineJsonCache;
 	}
 }

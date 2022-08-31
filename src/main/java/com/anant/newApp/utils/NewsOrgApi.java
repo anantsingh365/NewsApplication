@@ -1,4 +1,4 @@
-package com.anant.newApp;
+package com.anant.newApp.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,16 +13,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NewsArticle {
+public class NewsOrgApi {
 
 	private static final String USER_AGENT = "Mozilla/5.0";
 
-	private String ApiKey;
-	private String TopHeadLineUrl;
-    private String SearchQueryUrl;
+	private final String ApiKey;
+	private final String TopHeadLineUrl;
+    private final String SearchQueryUrl;
 
-    public NewsArticle(@Value("${NewsOrg.ApiKey}") String ApiKey, @Value("${NewsOrg.TopHeadLineUrl}") String TopHeadLineUrl,
-                       @Value("${NewsOrg.SearchQueryUrl}")String SearchQueryUrl){
+    public NewsOrgApi(@Value("${NewsOrg.ApiKey}") String ApiKey, @Value("${NewsOrg.TopHeadLineUrl}") String TopHeadLineUrl,
+                      @Value("${NewsOrg.SearchQueryUrl}")String SearchQueryUrl){
         this.ApiKey = ApiKey;
         this.TopHeadLineUrl = TopHeadLineUrl;
         this.SearchQueryUrl = SearchQueryUrl;

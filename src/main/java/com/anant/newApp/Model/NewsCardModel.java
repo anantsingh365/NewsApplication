@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MakeModel {
+public class NewsCardModel {
 
     private String title;
     private String description;
@@ -19,20 +19,20 @@ public class MakeModel {
         String pageTitle = "Showing Articles for: "+topic;
         JSONArray joArray = (JSONArray) jo.get("articles");
         JSONObject joArticles;
-        List<MakeModel> articles = new ArrayList<>();
-        MakeModel makeModel;
+        List<NewsCardModel> articles = new ArrayList<>();
+        NewsCardModel newsCardModel;
 
         int noOfArticles = joArray.size();
         for(int i =0; i<noOfArticles; i++){
             //get Articles from JSON array and add the articles in the list
             joArticles = (JSONObject) joArray.get(i);
-            makeModel = new MakeModel();
-            makeModel.setTitle((String)joArticles.get("title"));
-            makeModel.setDescription((String)joArticles.get("description"));
-            makeModel.setPublishedAt((String)joArticles.get("publishedAt"));
-            makeModel.setUrlToImage((String) joArticles.get("urlToImage"));
-            makeModel.setUrl((String) joArticles.get("url"));
-            articles.add(makeModel);
+            newsCardModel = new NewsCardModel();
+            newsCardModel.setTitle((String)joArticles.get("title"));
+            newsCardModel.setDescription((String)joArticles.get("description"));
+            newsCardModel.setPublishedAt((String)joArticles.get("publishedAt"));
+            newsCardModel.setUrlToImage((String) joArticles.get("urlToImage"));
+            newsCardModel.setUrl((String) joArticles.get("url"));
+            articles.add(newsCardModel);
         }
         model.addAttribute("articles",articles);
         model.addAttribute("pageTitle",pageTitle);
@@ -43,7 +43,7 @@ public class MakeModel {
         newsDataModel(jo, model, pageTitle);
     }
 
-    public MakeModel(){
+    public NewsCardModel(){
 
     }
 

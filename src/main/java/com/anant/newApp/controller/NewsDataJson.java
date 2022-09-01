@@ -15,13 +15,15 @@ public class NewsDataJson {
 	@Autowired
 	private SavedResponse savedResponse;
 	
-	@RequestMapping(value = "/Topic-JSON{topic}")
+	@RequestMapping(value = "/topic-JSON{topic}")
 	public JSONObject topicQuery(@RequestParam("topic") String topic) throws IOException, ParseException{
+		System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
 		return savedResponse.topicQuery(topic);
 	}
 
-	@RequestMapping(value = "/TopHeadlines-JSON")
+	@RequestMapping(value = "/topHeadlines-JSON")
 	public JSONObject topHeadLines() throws IOException, ParseException {
+		System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
 		return savedResponse.topHeadlines();
 	}
 

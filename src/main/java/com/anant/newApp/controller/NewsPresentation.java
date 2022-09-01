@@ -1,6 +1,7 @@
 package com.anant.newApp.controller;
 
-import com.anant.newApp.Model.MakeModel;
+import com.anant.newApp.Model.NewsCardModel;
+import com.anant.newApp.utils.SavedResponse;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import java.io.IOException;
 public class NewsPresentation {
 
     @Autowired
-    private NewsDataJson newsDataJson;
+    private SavedResponse savedResponse;
 
     @RequestMapping(value ="/index")
     public String index(){
@@ -21,13 +22,15 @@ public class NewsPresentation {
 
     @RequestMapping(value ="/topic{topic}", method = RequestMethod.GET)
     public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException {
-        MakeModel.newsDataModel(newsDataJson.topicQuery(topic), model,topic);
+        NewsCardModel.newsDataModel(savedResponse.topicQuery(topic), model,topic);
+        System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
         return "newsListing";
     }
 
     @RequestMapping(value = "/topHeadLines")
     public String topHeadLines(Model model) throws IOException, ParseException {
-        MakeModel.newsDataModel(newsDataJson.topHeadLines(), model);
+        NewsCardModel.newsDataModel(savedResponse.topHeadlines(), model);
+        System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
         return "newsListing";
     }
 }

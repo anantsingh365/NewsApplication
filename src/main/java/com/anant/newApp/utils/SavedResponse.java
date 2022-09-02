@@ -25,7 +25,7 @@ public class SavedResponse {
 	private  int savedTopicsThreshold;
 	private NewsOrgApi newsOrgApi;
 
-	private JSONObject topHeadLineJsonCache;
+	private JSONObject topHeadLineJsonCache = new JSONObject();
 
 	//Store Topics names and their corresponding JSONObject
 	private final Map<String, JSONObject> savedTopics = new HashMap<>();
@@ -43,11 +43,31 @@ public class SavedResponse {
 		this.newsOrgApi = newsOrgApi;
 	}
 
+	{
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while(true) {
+					try {
+						//refresh every 10 hours
+						Thread.sleep(1000 * 60 * 60 * 10);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					savedTopics.clear();
+					savedTopicsReloadCounter.clear();
+//				topHeadLineJsonCache.clear();
+//				topHeadLineReloadCounter = 0;
+				}
+			}
+		}).start();
+	}
+
 	// Stored already searched topics and their JSON data from NewsApi.org
 	// and only refresh the JSON data when request for already stored query exceeds a threshold.
 	public JSONObject topicQuery(String name) throws IOException, ParseException {
 
-		if(savedTopicMapSize > 1000 /*any arbitary number for map size, doesn't really mean anything*/){
+		if(savedTopicMapSize > 1000 /*clear map when 1000 topics are stored*/){
 			savedTopics.clear();
 			savedTopicsReloadCounter.clear();
 			savedTopicMapSize = 0;

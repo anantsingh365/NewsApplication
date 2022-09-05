@@ -7,7 +7,14 @@ import org.springframework.ui.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class NewsCardModel {
+
+    private static final int noOfCardsTopic = 100;
+    private static final int noOfCardsTopHeadLines = 20;
+    private static final List<NewsCardModel> cardsTopic = new ArrayList<>();
+    private static final List<NewsCardModel> cardsTopHeadLines = new ArrayList<>();
+    private static boolean cardsList = false;
 
     private String title;
     private String description;
@@ -15,32 +22,46 @@ public class NewsCardModel {
     private String urlToImage;
     private String url;
 
-    public static void newsDataModel(JSONObject jo, Model model, String topic){
-        String pageTitle = "Showing Articles for: "+topic;
-        JSONArray joArray = (JSONArray) jo.get("articles");
-        JSONObject joArticles;
-        List<NewsCardModel> articles = new ArrayList<>();
-        NewsCardModel newsCardModel;
+    private static void makeCardsObjects(){
+        if(!cardsList){
+            for(int i =0;i<noOfCardsTopic;i++){
+                cardsTopic.add(new NewsCardModel());
+            }
+            for(int i=0;i<noOfCardsTopHeadLines;i++){
+                cardsTopHeadLines.add(new NewsCardModel());
+            }
+            cardsList = true;
+        }
+    }
 
-        int noOfArticles = joArray.size();
-        for(int i =0; i<noOfArticles; i++){
+    private static void newsDataModel(JSONObject jo, Model model, String topic, List<NewsCardModel> cards){
+        if(!cardsList){
+            makeCardsObjects();
+        }
+        String pageTitle = topic;
+        var joArray = (JSONArray) jo.get("articles");
+        JSONObject joArticles;
+        for(int i =0; i<cards.size(); i++){
             //get Articles from JSON array and add the articles in the list
             joArticles = (JSONObject) joArray.get(i);
-            newsCardModel = new NewsCardModel();
-            newsCardModel.setTitle((String)joArticles.get("title"));
-            newsCardModel.setDescription((String)joArticles.get("description"));
-            newsCardModel.setPublishedAt((String)joArticles.get("publishedAt"));
-            newsCardModel.setUrlToImage((String) joArticles.get("urlToImage"));
-            newsCardModel.setUrl((String) joArticles.get("url"));
-            articles.add(newsCardModel);
+            cards.get(i).setTitle((String)joArticles.get("title"));
+            cards.get(i).setDescription((String)joArticles.get("description"));
+            cards.get(i).setPublishedAt((String)joArticles.get("publishedAt"));
+            cards.get(i).setUrlToImage((String) joArticles.get("urlToImage"));
+            cards.get(i).setUrl((String) joArticles.get("url"));
         }
-        model.addAttribute("articles",articles);
+        model.addAttribute("articles",cards);
         model.addAttribute("pageTitle",pageTitle);
     }
 
-    public static void newsDataModel(JSONObject jo, Model model){
-        String pageTitle = "Showing Top HeadLines";
-        newsDataModel(jo, model, pageTitle);
+    public static void newsDataModelTopic(JSONObject jo, Model model, String topic){
+        var pageTitle = "Showing HeadLines For "+ topic;
+        newsDataModel(jo, model, pageTitle, cardsTopic);
+    }
+
+    public static void newsDataModelTopHeadLines(JSONObject jo, Model model){
+        var pageTitle = "Showing Top HeadLines";
+        newsDataModel(jo, model, pageTitle, cardsTopHeadLines);
     }
 
     public NewsCardModel(){

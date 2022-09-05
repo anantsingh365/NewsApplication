@@ -12,6 +12,8 @@ import java.io.IOException;
 @Controller
 public class NewsPresentation {
 
+    static int noOfcardsTopic = 100;
+    static int noOfCardsTopHeadLines = 20;
     @Autowired
     private SavedResponse savedResponse;
 
@@ -22,14 +24,14 @@ public class NewsPresentation {
 
     @RequestMapping(value ="/topic{topic}", method = RequestMethod.GET)
     public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException {
-        NewsCardModel.newsDataModel(savedResponse.topicQuery(topic), model,topic);
+        NewsCardModel.newsDataModelTopic(savedResponse.topicQuery(topic), model,topic);
         System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
         return "newsListing";
     }
 
     @RequestMapping(value = "/topHeadLines")
     public String topHeadLines(Model model) throws IOException, ParseException {
-        NewsCardModel.newsDataModel(savedResponse.topHeadlines(), model);
+        NewsCardModel.newsDataModelTopHeadLines(savedResponse.topHeadlines(), model);
         System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
         return "newsListing";
     }

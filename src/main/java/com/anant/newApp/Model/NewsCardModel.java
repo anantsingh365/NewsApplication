@@ -12,8 +12,8 @@ public class NewsCardModel {
 
     private static final int noOfCardsTopic = 100;
     private static final int noOfCardsTopHeadLines = 20;
-    private static final List<NewsCardModel> cardsTopic = new ArrayList<>();
-    private static final List<NewsCardModel> cardsTopHeadLines = new ArrayList<>();
+    private static final List<NewsCardModel> CARDS_OBJECTS_TOPIC = new ArrayList<>();
+    private static final List<NewsCardModel> CARDS_OBJECTS_TOP_HEADLINES = new ArrayList<>();
     private static boolean cardsList = false;
 
     private String title;
@@ -25,10 +25,10 @@ public class NewsCardModel {
     private static void makeCardsObjects(){
         if(!cardsList){
             for(int i =0;i<noOfCardsTopic;i++){
-                cardsTopic.add(new NewsCardModel());
+                CARDS_OBJECTS_TOPIC.add(new NewsCardModel());
             }
             for(int i=0;i<noOfCardsTopHeadLines;i++){
-                cardsTopHeadLines.add(new NewsCardModel());
+                CARDS_OBJECTS_TOP_HEADLINES.add(new NewsCardModel());
             }
             cardsList = true;
         }
@@ -52,16 +52,17 @@ public class NewsCardModel {
         }
         model.addAttribute("articles",cards);
         model.addAttribute("pageTitle",pageTitle);
+//        model.addAttribute("endOfPage","")
     }
 
     public static void newsDataModelTopic(JSONObject jo, Model model, String topic){
-        var pageTitle = "Showing HeadLines For "+ topic;
-        newsDataModel(jo, model, pageTitle, cardsTopic);
+        String pageTitle = "Showing HeadLines For "+ topic;
+        newsDataModel(jo, model, pageTitle, CARDS_OBJECTS_TOPIC);
     }
 
     public static void newsDataModelTopHeadLines(JSONObject jo, Model model){
-        var pageTitle = "Showing Top HeadLines";
-        newsDataModel(jo, model, pageTitle, cardsTopHeadLines);
+        String pageTitle = "Showing Top HeadLines";
+        newsDataModel(jo, model, pageTitle, CARDS_OBJECTS_TOP_HEADLINES);
     }
 
     public NewsCardModel(){

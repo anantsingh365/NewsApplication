@@ -21,9 +21,9 @@ public class SavedResponse {
 
 	private int topHeadLineReloadCounter = 0;
 
-	private  int topHeadLineThreshold;
-	private  int savedTopicsThreshold;
-	private NewsOrgApi newsOrgApi;
+	private final int topHeadLineThreshold;
+	private final int savedTopicsThreshold;
+	private final NewsOrgApi newsOrgApi;
 
 	private JSONObject topHeadLineJsonCache = new JSONObject();
 

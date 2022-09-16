@@ -1,5 +1,6 @@
 package com.anant.newApp.Model;
 
+import com.anant.newApp.Entity.NewsCardEntity;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.ui.Model;
@@ -16,6 +17,8 @@ public class NewsCardModel {
     private static final List<NewsCardModel> CARDS_OBJECTS_TOP_HEADLINES = new ArrayList<>();
     private static boolean cardsList = false;
 
+
+    private int ArticleId;
     private String title;
     private String description;
     private String publishedAt;
@@ -38,12 +41,13 @@ public class NewsCardModel {
         if(!cardsList){
             makeCardsObjects();
         }
-        String pageTitle = topic;
         var joArray = (JSONArray) jo.get("articles");
         JSONObject joArticles;
         for(int i =0; i<cards.size(); i++){
             //get Articles from JSON array and add the articles in the list
+
             joArticles = (JSONObject) joArray.get(i);
+            cards.get(i).setArticleId(i);
             cards.get(i).setTitle((String)joArticles.get("title"));
             cards.get(i).setDescription((String)joArticles.get("description"));
             cards.get(i).setPublishedAt((String)joArticles.get("publishedAt"));
@@ -51,8 +55,23 @@ public class NewsCardModel {
             cards.get(i).setUrl((String) joArticles.get("url"));
         }
         model.addAttribute("articles",cards);
-        model.addAttribute("pageTitle",pageTitle);
+        model.addAttribute("pageTitle",topic);
 //        model.addAttribute("endOfPage","")
+    }
+
+    public static void newsDataModelSaved(List<NewsCardEntity> savedCards, Model model){
+        ArrayList<NewsCardModel> cards = new ArrayList<>();
+        savedCards.forEach((saved) -> {
+            NewsCardModel tempCard = new NewsCardModel();
+            tempCard.setTitle(saved.getTitle());
+            tempCard.setDescription(saved.getDescription());
+            tempCard.setPublishedAt(saved.getPublishedAt());
+            tempCard.setUrlToImage(saved.getUrlToImage());
+            tempCard.setUrl(saved.getUrl());
+            cards.add(tempCard);
+        });
+        model.addAttribute("articles",cards);
+        model.addAttribute("pageTitle","saved Topics");
     }
 
     public static void newsDataModelTopic(JSONObject jo, Model model, String topic){
@@ -66,9 +85,15 @@ public class NewsCardModel {
     }
 
     public NewsCardModel(){
-
     }
 
+    public int getArticleId() {
+        return ArticleId;
+    }
+
+    public void setArticleId(int articleId) {
+        this.ArticleId = articleId;
+    }
     public String getTitle() {
         return title;
     }

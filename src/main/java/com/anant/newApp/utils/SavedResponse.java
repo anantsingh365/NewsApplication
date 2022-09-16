@@ -67,7 +67,7 @@ public class SavedResponse {
 	// and only refresh the JSON data when request for already stored query exceeds a threshold.
 	public JSONObject topicQuery(String name) throws IOException, ParseException {
 
-		if(savedTopicMapSize > 1000 /*clear map when 1000 topics are stored*/){
+		if(savedTopicMapSize > 1000 /*clear map when 1000 topics are stored (why? I dont know)*/){
 			savedTopics.clear();
 			savedTopicsReloadCounter.clear();
 			savedTopicMapSize = 0;

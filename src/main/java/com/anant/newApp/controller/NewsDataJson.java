@@ -24,5 +24,4 @@ public class NewsDataJson {
 	public JSONObject topHeadLines() throws IOException, ParseException {
 		return savedResponse.topHeadlines();
 	}
-
 }

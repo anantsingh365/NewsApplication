@@ -18,9 +18,9 @@ public class NewsCardService {
     }
 
     public int save(NewsCardEntity entity){
-       var EntityExists  = repo.findById(entity.getUrl());
-       if(EntityExists.isPresent()) {
-           return EntityExists.get().getId();
+       var articleToSave  = repo.findById(entity.getUrl());
+       if(articleToSave.isPresent()) {
+           return articleToSave.get().getId();
        }
            NewsCardEntity savedEntity = repo.save(entity);
            return savedEntity.getId();
@@ -30,4 +30,12 @@ public class NewsCardService {
         return repo.findById(url);
     }
 
+    public boolean deleteSavedArticle(String url){
+        Optional<NewsCardEntity> cardToDelete = findById(url);
+        if(cardToDelete.isPresent()){
+            repo.deleteById(url);
+            return true;
+        }
+       return false;
+    }
 }

@@ -45,7 +45,6 @@ public class NewsCardModel {
         JSONObject joArticles;
         for(int i =0; i<cards.size(); i++){
             //get Articles from JSON array and add the articles in the list
-
             joArticles = (JSONObject) joArray.get(i);
             cards.get(i).setArticleId(i);
             cards.get(i).setTitle((String)joArticles.get("title"));
@@ -56,21 +55,13 @@ public class NewsCardModel {
         }
         model.addAttribute("articles",cards);
         model.addAttribute("pageTitle",topic);
-//        model.addAttribute("endOfPage","")
     }
 
-    public static void newsDataModelSaved(List<NewsCardEntity> savedCards, Model model){
-        ArrayList<NewsCardModel> cards = new ArrayList<>();
-        savedCards.forEach((saved) -> {
-            NewsCardModel tempCard = new NewsCardModel();
-            tempCard.setTitle(saved.getTitle());
-            tempCard.setDescription(saved.getDescription());
-            tempCard.setPublishedAt(saved.getPublishedAt());
-            tempCard.setUrlToImage(saved.getUrlToImage());
-            tempCard.setUrl(saved.getUrl());
-            cards.add(tempCard);
-        });
-        model.addAttribute("articles",cards);
+    public static void newsDataModelSavedArticles(List<NewsCardEntity> savedCards, Model model){
+        for(int i=0; i<savedCards.size();i++) {
+            savedCards.get(i).setId(i);
+        }
+        model.addAttribute("savedArticles",savedCards);
         model.addAttribute("pageTitle","saved Topics");
     }
 
@@ -133,5 +124,4 @@ public class NewsCardModel {
     public void setUrl(String url) {
         this.url = url;
     }
-
 }

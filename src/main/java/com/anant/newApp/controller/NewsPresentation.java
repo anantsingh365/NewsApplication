@@ -3,7 +3,6 @@ package com.anant.newApp.controller;
 import com.anant.newApp.Entity.NewsCardEntity;
 import com.anant.newApp.Model.NewsCardModel;
 import com.anant.newApp.Service.NewsCardService;
-import com.anant.newApp.utils.SavedNewsBucket;
 import com.anant.newApp.utils.SavedResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -34,17 +33,10 @@ public class NewsPresentation {
         return "home";
     }
 
-    @GetMapping(value = "/topic{topic}")
+    @GetMapping(value ="/topic{topic}")
     public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException {
-        var topicBucket = SavedNewsBucket.getSavedNewsBucket();
-        JSONObject newsJson = new JSONObject();
-        if(topicBucket.containsTopic(topic)){
-            newsJson = topicBucket.getTopic(topic);
-        }else{
-
-        }
-       // var newsJson = savedResponse.topicQuery(topic);
-        NewsCardModel.newsDataModelTopic(newsJson, model, topic);
+        JSONObject newsJson = savedResponse.topicQuery(topic);
+        NewsCardModel.newsDataModelTopic(newsJson, model,topic);
         System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
         return "newsListing";
     }

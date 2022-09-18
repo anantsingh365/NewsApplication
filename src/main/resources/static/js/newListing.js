@@ -21,9 +21,9 @@ function deleteArticle(clicked_element){
         console.log(xhr.responseText);
       }};
 
-    let data = "{
+    let data = {
      "url":url
-    }";
+    };
 
     xhr.send(data);
     console.log(xhr.responseText);

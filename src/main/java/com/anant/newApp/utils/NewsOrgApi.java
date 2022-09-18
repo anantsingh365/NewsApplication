@@ -23,7 +23,7 @@ public class NewsOrgApi {
 
     private static final String ApiKeytemp = "9e3acd0313cc4776945ca6c1d0a2190e";
     private static final String TopHeadLineUrlTemp = "https://newsapi.org/v2/top-headlines?country=us&apiKey=###API_KEY###";
-    private static final String SearchQueryUrlTemp = "https://newsapi.org/v2/everything?q=###Enter_query_here###&apiKey=###API_KEY###" ;
+    private static final String SearchQueryUrlTemp = "https://newsapi.org/v2/everything?q=###Enter_query_here###&apiKey=###API_KEY###";
 
     public NewsOrgApi(){
         this.ApiKey = ApiKeytemp;

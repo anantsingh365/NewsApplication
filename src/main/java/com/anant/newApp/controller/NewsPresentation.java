@@ -3,6 +3,7 @@ package com.anant.newApp.controller;
 import com.anant.newApp.Entity.NewsCardEntity;
 import com.anant.newApp.Model.NewsCardModel;
 import com.anant.newApp.Service.NewsCardService;
+import com.anant.newApp.utils.CheckSavedResponseLayer;
 import com.anant.newApp.utils.SavedResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import static com.anant.newApp.utils.SavedResponseBucket.bucket;
 
 import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
@@ -35,9 +38,10 @@ public class NewsPresentation {
 
     @GetMapping(value ="/topic{topic}")
     public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException {
-        JSONObject newsJson = savedResponse.topicQuery(topic);
-        NewsCardModel.newsDataModelTopic(newsJson, model,topic);
-        System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
+
+        JSONObject newsJson = CheckSavedResponseLayer.getRespone(topic);
+        NewsCardModel.newsDataModelTopic(newsJson, model, topic);
+       // System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
         return "newsListing";
     }
 
@@ -51,7 +55,7 @@ public class NewsPresentation {
 
     @GetMapping(value = "/saveArticle{id}")
     @ResponseBody
-    public String savedArticles(Model model, @RequestParam int id) {
+    public String savedArticles(Model model, @RequestAttribute int id) {
         if (model == null) {
             return "no Item to save";
         }

@@ -1,6 +1,6 @@
-function saveArticle(clicked_id)
+function saveArticle(clicked_element)
 {
-        let saveArticleUrl= "http://192.168.1.6:10000/" + "saveArticle?id=" + clicked_id;
+        let saveArticleUrl= "http://192.168.1.6:10000/" + "saveArticle?id=" + clicked_element.getAttribute('id');
         console.log(saveArticleUrl);
         let xmlHttpReq = new XMLHttpRequest();
          xmlHttpReq.open("GET", saveArticleUrl, false);

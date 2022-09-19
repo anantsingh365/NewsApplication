@@ -17,7 +17,6 @@ public class NewsCardModel {
     private static final List<NewsCardModel> CARDS_OBJECTS_TOP_HEADLINES = new ArrayList<>();
     private static boolean cardsList = false;
 
-
     private int ArticleId;
     private String title;
     private String description;
@@ -42,6 +41,9 @@ public class NewsCardModel {
             makeCardsObjects();
         }
         var joArray = (JSONArray) jo.get("articles");
+        if(joArray == null){
+            System.out.println("Couldn't find the news for the given topic");
+        }
         JSONObject joArticles;
         for(int i =0; i<cards.size(); i++){
             //get Articles from JSON array and add the articles in the list

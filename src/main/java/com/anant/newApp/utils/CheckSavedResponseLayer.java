@@ -4,23 +4,33 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-
-import static com.anant.newApp.utils.SavedResponseBucket.bucket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CheckSavedResponseLayer {
 
-    public static JSONObject getRespone(String topic) throws IOException, ParseException {
-        if (bucket.containsKey(topic)){
+    public static Map<String, JSONObject> savedBucket = new HashMap<>();
+
+    public static JSONObject getResponeTopic(String topic) throws IOException, ParseException {
+        if (savedBucket.containsKey(topic)){
             System.out.println("Returning Cached Topic");
-            return bucket.get(topic);
+            return savedBucket.get(topic);
         }
         System.out.println("Topic not cached, Generating and caching Topic");
-        return cacheTopic(topic);
-    }
-    public static JSONObject cacheTopic(String topic) throws IOException, ParseException {
         NewsOrgApi newsOrgApi = new NewsOrgApi();
         JSONObject savedTopic = newsOrgApi.getSearchQuery(topic);
-        bucket.put(topic, savedTopic);
+        savedBucket.put(topic, savedTopic);
         return savedTopic;
+    }
+    public static JSONObject getResponseTopHeadLines() throws IOException, ParseException {
+        if(savedBucket.containsKey("topHeadLines")){
+            System.out.println("Saved Response Top HeadLines");
+            return savedBucket.get("topHeadLines");
+        }
+        NewsOrgApi newsOrgApi = new NewsOrgApi();
+        JSONObject topHeadLinesJSON = newsOrgApi.getTopHeadLines();
+        savedBucket.put("topHeadLines",topHeadLinesJSON);
+        System.out.println("New Response Top HeadLines");
+        return topHeadLinesJSON;
     }
 }

@@ -10,8 +10,8 @@ function saveArticle(clicked_element)
 function deleteArticle(clicked_element){
     let url = clicked_element.getAttribute('url');
     let deleteArticleUrl = "http://192.168.1.6:10000/deleteArticle";
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", deleteArticleUrl);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", deleteArticleUrl, true);
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -21,10 +21,11 @@ function deleteArticle(clicked_element){
         console.log(xhr.responseText);
       }};
 
-    let data = {
-     "url":url
-    };
+    let data = '{"url":"'+url+ '"}';
 
     xhr.send(data);
     console.log(xhr.responseText);
+    let cardId = clicked_element.getAttribute('id');
+    const cardToDelete = document.getElementById(cardId);
+    cardToDelete.remove();
 }

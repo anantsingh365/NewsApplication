@@ -17,7 +17,7 @@
 <h1 th:inline = "text">[[${pageTitle}]]</h1>
 
 <div th:each="savedArticles: ${savedArticles}">
-    <div th:attr="id=@{${savedArticles.Id}}"></div>
+    <div th:attr="id=@{${savedArticles.Id}}">
     <div class="d-flex align-items-center">
         <div class = "container -fluid">
             <div class ="card" style="width: 18rem;">
@@ -33,6 +33,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href = "css/newsListing.css">
 </head>
 <body>
-
+<script src = "js/newListing.js"></script>
 <h1 th:inline = "text">[[${pageTitle}]]</h1>
 
 <div th:each="articles: ${articles}">
@@ -27,7 +27,7 @@
             <p class= "card-text" th:inline = "text">[[${articles.description}]]</p>
             <a th:href = "@{${articles.url}}" class = "btn btn-primary">Read the Full Article</a>
 <!--            <form action = "" method="get">-->
-             <a name="article" th:attr="value=@{${article}}, id = @{${articles.ArticleId}}" onClick ="saveArticle(this.id)" class = "btn btn-primary">Save the Article</a>
+             <a name="article" th:attr="id = @{${articles.ArticleId}}" onClick ="saveArticle(this)" class = "btn btn-primary">Save the Article</a>
 <!--            </form>-->
         </div>
     </div>
@@ -35,6 +35,5 @@
 </div>
 </div>
 
-    <script src = "js/newListing.js"></script>
 </body>
 </html>

@@ -3,28 +3,24 @@ package com.anant.newApp.controller;
 import com.anant.newApp.Entity.NewsCardEntity;
 import com.anant.newApp.Model.NewsCardModel;
 import com.anant.newApp.Service.NewsCardService;
-import com.anant.newApp.utils.SavedResponse;
+import com.anant.newApp.utils.CheckSavedResponseLayer;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @SessionAttributes("articles")
 public class NewsPresentation {
 
-    @Autowired
-    private SavedResponse savedResponse;
-
+//    @Autowired
+//    private SavedResponse savedResponse;
     @Autowired
     private NewsCardService newsCardService;
 
@@ -35,17 +31,15 @@ public class NewsPresentation {
 
     @GetMapping(value ="/topic{topic}")
     public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException {
-        JSONObject newsJson = savedResponse.topicQuery(topic);
-        NewsCardModel.newsDataModelTopic(newsJson, model,topic);
-        System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
+        JSONObject newsJson = CheckSavedResponseLayer.getResponeTopic(topic);
+        NewsCardModel.newsDataModelTopic(newsJson, model, topic);
         return "newsListing";
     }
 
     @GetMapping(value = "/topHeadLines")
     public String topHeadLines(Model model) throws IOException, ParseException {
-        var newsJson = savedResponse.topHeadlines();
+        JSONObject newsJson = CheckSavedResponseLayer.getResponseTopHeadLines();
         NewsCardModel.newsDataModelTopHeadLines(newsJson, model);
-        System.out.println("Inside NewsDataJson and hash for savedResponse object is " + savedResponse.hashCode());
         return "newsListing";
     }
 

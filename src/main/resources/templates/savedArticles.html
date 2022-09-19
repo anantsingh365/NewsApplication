@@ -17,7 +17,7 @@
 <h1 th:inline = "text">[[${pageTitle}]]</h1>
 
 <div th:each="savedArticles: ${savedArticles}">
-    <div th:attr="id=@{${savedArticles.Id}}"></div>
+    <div th:attr="id=@{${savedArticles.Id}}">
     <div class="d-flex align-items-center">
         <div class = "container -fluid">
             <div class ="card" style="width: 18rem;">
@@ -28,11 +28,12 @@
                     <p class= "card-text" th:inline = "text">[[${savedArticles .description}]]</p>
                     <a th:href = "@{${savedArticles.url}}" class = "btn btn-primary">Read the Full Article</a>
                     <!--            <form action = "" method="get">-->
-                    <a name="article" th:attr="value=@{${article}}, id = @{${savedArticles.Id}}, url=@{${savedArticles.url}}" onClick ="deleteArticle(this)" class = "btn btn-primary">Delete the Article</a>
+                    <a name="article" th:attr="id = @{${savedArticles.id}}, url=@{${savedArticles.url}}" onClick ="deleteArticle(this)" class = "btn btn-primary">Delete the Article</a>
                     <!--            </form>-->
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 

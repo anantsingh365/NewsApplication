@@ -2,8 +2,6 @@ package com.anant.newApp.utils;
 
 import org.springframework.stereotype.Component;
 
-import static com.anant.newApp.utils.CheckSavedResponseLayer.savedBucket;
-
 @Component
 public class RefreshBucket {
 
@@ -15,22 +13,16 @@ public class RefreshBucket {
         Runnable runnable = ()->{
             while(true){
                 try {
-                   // Thread.sleep(1000 * 60 * 60 * 5);
-                    Thread.sleep(1000 * 20);
+                   Thread.sleep(1000 * 60 * 60 * 5);
+                  // Thread.sleep(1000 * 30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("Refreshing every 20 seconds!!");
-                refresh();
+               // System.out.println("Refreshing every 30 seconds");
+                CheckSavedResponseLayer.ClearBucket();
         }
         };
         Thread thread = new Thread(runnable);
         thread.start();
-    }
-
-    public static void refresh(){
-        if(!savedBucket.isEmpty()){
-            savedBucket.clear();
-        }
     }
 }

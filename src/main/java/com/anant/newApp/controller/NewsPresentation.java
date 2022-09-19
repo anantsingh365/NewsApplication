@@ -19,8 +19,6 @@ import java.util.ArrayList;
 @SessionAttributes("articles")
 public class NewsPresentation {
 
-//    @Autowired
-//    private SavedResponse savedResponse;
     @Autowired
     private NewsCardService newsCardService;
 
@@ -30,7 +28,7 @@ public class NewsPresentation {
     }
 
     @GetMapping(value ="/topic{topic}")
-    public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException {
+    public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException{
         JSONObject newsJson = CheckSavedResponseLayer.getResponeTopic(topic);
         NewsCardModel.newsDataModelTopic(newsJson, model, topic);
         return "newsListing";

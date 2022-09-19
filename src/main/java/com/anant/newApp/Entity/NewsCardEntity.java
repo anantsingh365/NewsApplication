@@ -14,6 +14,8 @@ public class NewsCardEntity {
         @Lob
         private String description;
         private String publishedAt;
+
+        @Lob
         private String urlToImage;
 
         @Id

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CheckSavedResponseLayer {
+public class ResponseLayer {
 
     private static final Map<String, JSONObject> savedBucket = new ConcurrentHashMap<>();
     private static boolean bucketClearingStatus = false;
@@ -19,7 +19,7 @@ public class CheckSavedResponseLayer {
         bucketClearingStatus = false;
     }
 
-    public static void bucketClearingUnderway(){
+    public static void bucketClearingCheck(){
         while(bucketClearingStatus){
             try {
                 Thread.sleep(10);
@@ -30,31 +30,27 @@ public class CheckSavedResponseLayer {
     }
 
     public static JSONObject getResponeTopic(String topic) throws IOException, ParseException{
-        bucketClearingUnderway();
+        bucketClearingCheck();
         JSONObject newsJson = savedBucket.get(topic);
         if(newsJson != null) {
             System.out.println("saved Response Topic " + topic);
             return newsJson;
         }
         System.out.println("Topic not cached, Generating and caching Topic");
-        NewsOrgApi newsOrgApi = new NewsOrgApi();
-        JSONObject savedTopic = newsOrgApi.getSearchQuery(topic);
-        savedBucket.put(topic, savedTopic);
-        return savedTopic;
+        savedBucket.putIfAbsent(topic, new NewsOrgApi().getSearchQuery(topic));
+        return savedBucket.get(topic);
 
     }
 
     public static JSONObject getResponseTopHeadLines() throws IOException, ParseException {
-        bucketClearingUnderway();
+        bucketClearingCheck();
         JSONObject newsJson = savedBucket.get("topHeadLines");
         if(newsJson != null){
             System.out.println("saved Response TopHeadLines");
             return newsJson;
         }
-        NewsOrgApi newsOrgApi = new NewsOrgApi();
-        JSONObject topHeadLinesJSON = newsOrgApi.getTopHeadLines();
-        savedBucket.put("topHeadLines",topHeadLinesJSON);
+        savedBucket.putIfAbsent("topHeadLines",new NewsOrgApi().getTopHeadLines());
         System.out.println("New Response Top HeadLines");
-        return topHeadLinesJSON;
+        return savedBucket.get("topHeadLines");
     }
 }

@@ -19,7 +19,7 @@ public class RefreshBucket {
                     e.printStackTrace();
                 }
                // System.out.println("Refreshing every 30 seconds");
-                CheckSavedResponseLayer.ClearBucket();
+                ResponseLayer.ClearBucket();
         }
         };
         Thread thread = new Thread(runnable);

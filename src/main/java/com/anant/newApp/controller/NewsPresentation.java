@@ -3,7 +3,7 @@ package com.anant.newApp.controller;
 import com.anant.newApp.Entity.NewsCardEntity;
 import com.anant.newApp.Model.NewsCardModel;
 import com.anant.newApp.Service.NewsCardService;
-import com.anant.newApp.utils.CheckSavedResponseLayer;
+import com.anant.newApp.utils.ResponseLayer;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -29,15 +29,15 @@ public class NewsPresentation {
 
     @GetMapping(value ="/topic{topic}")
     public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException{
-        JSONObject newsJson = CheckSavedResponseLayer.getResponeTopic(topic);
-        NewsCardModel.newsDataModelTopic(newsJson, model, topic);
+        JSONObject newsJson = ResponseLayer.getResponeTopic(topic);
+        NewsCardModel.makeTopicCards(newsJson, model, topic);
         return "newsListing";
     }
 
     @GetMapping(value = "/topHeadLines")
     public String topHeadLines(Model model) throws IOException, ParseException {
-        JSONObject newsJson = CheckSavedResponseLayer.getResponseTopHeadLines();
-        NewsCardModel.newsDataModelTopHeadLines(newsJson, model);
+        JSONObject newsJson = ResponseLayer.getResponseTopHeadLines();
+        NewsCardModel.makeTopHeadLineCards(newsJson, model);
         return "newsListing";
     }
 
@@ -68,7 +68,7 @@ public class NewsPresentation {
     @GetMapping(value = "/saved")
     public String getSavedArticles(Model model) {
         var savedCards = newsCardService.findAll();
-        NewsCardModel.newsDataModelSavedArticles(savedCards, model);
+        NewsCardModel.makeSavedCards(savedCards, model);
         return "savedArticles";
     }
 

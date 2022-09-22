@@ -59,7 +59,7 @@ public class NewsCardModel {
         model.addAttribute("pageTitle",topic);
     }
 
-    public static void newsDataModelSavedArticles(List<NewsCardEntity> savedCards, Model model){
+    public static void makeSavedCards(List<NewsCardEntity> savedCards, Model model){
         for(int i=0; i<savedCards.size();i++) {
             savedCards.get(i).setId(i);
         }
@@ -67,12 +67,12 @@ public class NewsCardModel {
         model.addAttribute("pageTitle","saved Topics");
     }
 
-    public static void newsDataModelTopic(JSONObject jo, Model model, String topic){
+    public static void makeTopicCards(JSONObject jo, Model model, String topic){
         String pageTitle = "Showing HeadLines For "+ topic;
         newsDataModel(jo, model, pageTitle, CARDS_OBJECTS_TOPIC);
     }
 
-    public static void newsDataModelTopHeadLines(JSONObject jo, Model model){
+    public static void makeTopHeadLineCards(JSONObject jo, Model model){
         String pageTitle = "Showing Top HeadLines";
         newsDataModel(jo, model, pageTitle, CARDS_OBJECTS_TOP_HEADLINES);
     }

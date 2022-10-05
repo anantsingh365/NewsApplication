@@ -2,6 +2,11 @@ package com.anant.newApp.utils;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Just clear the hashmap that stores the json data for news articles
+ * , this being a separate class is pretty stupid but i need
+ * to make my source code look big.
+ */
 @Component
 public class RefreshBucket {
 
@@ -9,6 +14,10 @@ public class RefreshBucket {
         System.out.println("Refresh Bucket Initializing");
         initRefresh();
     }
+
+    /**
+     * Actual method that refreshes the bucket.
+     */
     public static void initRefresh(){
         Runnable runnable = ()->{
             while(true){

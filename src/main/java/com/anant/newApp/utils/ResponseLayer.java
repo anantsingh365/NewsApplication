@@ -11,9 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Stores the JSON data representing the news fetched from NEWSAPI.org
- * in the free tire you only get 100 requests per day, so saving news
- * makes sense.
- * @author Anant Singh
  */
 public class ResponseLayer {
 
@@ -26,22 +23,7 @@ public class ResponseLayer {
         bucketClearingStatus = false;
     }
 
-    /**
-     * Information about this control flow graph edge.
-     *
-     * <ul>
-     *    <li>{@link NewsOrgApi#getSearchQuery(String)} returns the news JSON for particular query that the client has entered. </li>
-     *   <li>If {@link ClassWriter#COMPUTE_MAXS} is used, this field contains either a stack size
-     *       delta (for an edge corresponding to a jump instruction), or the value EXCEPTION (for an
-     *       edge corresponding to an exception handler). The stack size delta is the stack size just
-     *       after the jump instruction, minus the stack size at the beginning of the predecessor
-     *       basic block, i.e. the one containing the jump instruction.
-     *   <li>If {@link ClassWriter#COMPUTE_FRAMES} is used, this field contains either the value JUMP
-     *       (for an edge corresponding to a jump instruction), or the index, in the {@link
-     *       ClassWriter} type table, of the exception type that is handled (for an edge corresponding
-     *       to an exception handler).
-     * </ul>
-     */
+
     public static void bucketClearingCheck(){
         while(bucketClearingStatus){
             try {
@@ -54,7 +36,7 @@ public class ResponseLayer {
 
     /**
      * Return news data in json format for given topic
-     * @param topic topic for which user search for (never {@code null})
+     * @param topic topic for which user search for
      * @return JSONObject containing news data
      * @throws IOException Http calls to newsapi.org
      * @throws ParseException parsing json is risky

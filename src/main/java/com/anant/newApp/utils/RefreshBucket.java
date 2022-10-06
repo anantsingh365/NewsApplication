@@ -1,23 +1,22 @@
 package com.anant.newApp.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
  * Just clear the hashmap that stores the json data for news articles
- * , this being a separate class is pretty stupid but i need
- * to make my source code look big.
  */
 @Component
 public class RefreshBucket {
 
+    private static final Logger logger = LoggerFactory.getLogger(RefreshBucket.class);
+
     static{
-        System.out.println("Refresh Bucket Initializing");
+        logger.info("Init Response Bucket Refresh");
         initRefresh();
     }
 
-    /**
-     * Actual method that refreshes the bucket.
-     */
     public static void initRefresh(){
         Runnable runnable = ()->{
             while(true){
@@ -27,8 +26,9 @@ public class RefreshBucket {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-               // System.out.println("Refreshing every 30 seconds");
+                logger.info("Clearing Response Bucket");
                 ResponseLayer.ClearBucket();
+                logger.info("Clearing Bucket Done");
         }
         };
         Thread thread = new Thread(runnable);

@@ -20,9 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * @see "Read brian goetzs' book on Java Concurrency in Practice for more understanding of what is written in this class"
- */
+
 @Controller
 @SessionAttributes("articles")
 public class NewsPresentation {
@@ -41,8 +39,6 @@ public class NewsPresentation {
 
     @PostMapping(value = "/scopeTestingLanding")
     public String scopeTestingLanding(@RequestBody JSONObject url, HttpSession session,@Autowired scopeTesting sessionObject){
-//        ApplicationContext context = new Annotation(NewAppApplication.class);
-//        scopeTesting sessionObject = context.getBean("getscopeTestingObject", scopeTesting.class);
         System.out.println("You entered this data" +url.toJSONString());
         System.out.println("Hashcode for session object created by spring is " + sessionObject.hashCode());
         sessionObject.jsonUrlString = url.toJSONString();

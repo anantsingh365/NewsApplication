@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.anant.newApp"},{"l":"com.anant.newApp.controller"},{"l":"com.anant.newApp.Entity"},{"l":"com.anant.newApp.Model"},{"l":"com.anant.newApp.Repository"},{"l":"com.anant.newApp.Service"},{"l":"com.anant.newApp.utils"}];updateSearchResults();

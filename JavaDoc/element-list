@@ -1,0 +1,7 @@
+com.anant.newApp
+com.anant.newApp.controller
+com.anant.newApp.Entity
+com.anant.newApp.Model
+com.anant.newApp.Repository
+com.anant.newApp.Service
+com.anant.newApp.utils

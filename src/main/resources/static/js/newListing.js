@@ -24,8 +24,10 @@ function deleteArticle(clicked_element){
     let data = '{"url":"'+url+ '"}';
 
     xhr.send(data);
+    console.log(xhr.status);
     console.log(xhr.responseText);
     let cardId = clicked_element.getAttribute('id');
     const cardToDelete = document.getElementById(cardId);
     cardToDelete.remove();
+
 }

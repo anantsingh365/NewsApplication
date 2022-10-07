@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,40 +18,30 @@ public class NewsOrgApi {
 
 	private static final String USER_AGENT = "Mozilla/5.0";
 
-	private final String ApiKey;
-	private final String TopHeadLineUrl;
-    private final String SearchQueryUrl;
-
-    private static final String ApiKeytemp = "9e3acd0313cc4776945ca6c1d0a2190e";
-    private static final String TopHeadLineUrlTemp = "https://newsapi.org/v2/top-headlines?country=us&apiKey=###API_KEY###";
-    private static final String SearchQueryUrlTemp = "https://newsapi.org/v2/everything?q=###Enter_query_here###&apiKey=###API_KEY###";
-
-    public NewsOrgApi(){
-        this.ApiKey = ApiKeytemp;
-        this.TopHeadLineUrl = TopHeadLineUrlTemp;
-        this.SearchQueryUrl = SearchQueryUrlTemp;
-    }
+	private static String ApiKeyStatic;
+	private static String TopHeadLineUrlStatic;
+    private static String SearchQueryUrlStatic;
 
     public NewsOrgApi(@Value("${NewsOrg.ApiKey}") String ApiKey, @Value("${NewsOrg.TopHeadLineUrl}") String TopHeadLineUrl,
                       @Value("${NewsOrg.SearchQueryUrl}")String SearchQueryUrl){
-        this.ApiKey = ApiKey;
-        this.TopHeadLineUrl = TopHeadLineUrl;
-        this.SearchQueryUrl = SearchQueryUrl;
+        ApiKeyStatic = ApiKey;
+        TopHeadLineUrlStatic = TopHeadLineUrl;
+        SearchQueryUrlStatic = SearchQueryUrl;
     }
 
         //get News JSON data for particular Topic
-	public JSONObject getSearchQuery(String Query) throws IOException, ParseException {
-		String queryString = SearchQueryUrl.replaceFirst("###Enter_query_here###",Query);
-		String queryStringWithKey = queryString.replaceFirst("###API_KEY###", ApiKey);
+	public static JSONObject getSearchQuery(String Query) throws IOException, ParseException {
+		String queryString = SearchQueryUrlStatic.replaceFirst("###Enter_query_here###",Query);
+		String queryStringWithKey = queryString.replaceFirst("###API_KEY###", ApiKeyStatic);
 		return getNewsJSON(queryStringWithKey);
 	}
 	    //get News JSON date for TopHeadLines
-	public JSONObject getTopHeadLines() throws IOException, ParseException {
-		String topHeadLineWithKey = TopHeadLineUrl.replaceFirst("###API_KEY###", ApiKey);
+	public static JSONObject getTopHeadLines() throws IOException, ParseException {
+		String topHeadLineWithKey = TopHeadLineUrlStatic.replaceFirst("###API_KEY###", ApiKeyStatic);
 		return getNewsJSON(topHeadLineWithKey);
 	}
 	
-	private JSONObject getNewsJSON(String url) throws IOException, ParseException {
+	private static JSONObject getNewsJSON(String url) throws IOException, ParseException {
 	
 		JSONObject jo = new JSONObject();
 		URL obj = new URL(url);

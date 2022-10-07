@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 @Component
 public class PresentationControllerLogging {
 
-    Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
+    Logger logger = Logger.getAnonymousLogger();
 
     @Before("execution(* com.anant.newApp.controller.NewsPresentation.topHeadLines(..))")
     public void beforeAddAccountAdvice() {

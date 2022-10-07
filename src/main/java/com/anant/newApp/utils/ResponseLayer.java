@@ -2,16 +2,18 @@ package com.anant.newApp.utils;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import org.springframework.asm.ClassWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Stores the JSON data representing the news fetched from NEWSAPI.org
  */
+@Component
 public class ResponseLayer {
 
     private static final Map<String, JSONObject> savedBucket = new ConcurrentHashMap<>();
@@ -22,7 +24,6 @@ public class ResponseLayer {
         savedBucket.clear();
         bucketClearingStatus = false;
     }
-
 
     public static void bucketClearingCheck(){
         while(bucketClearingStatus){
@@ -49,8 +50,9 @@ public class ResponseLayer {
             System.out.println("saved Response Topic " + topic);
             return newsJson;
         }
+        //context.getBean(NewsOrgApi.class);
         System.out.println("Topic not cached, Generating and caching Topic");
-        savedBucket.putIfAbsent(topic, new NewsOrgApi().getSearchQuery(topic));
+        savedBucket.putIfAbsent(topic,  NewsOrgApi.getSearchQuery(topic));
         return savedBucket.get(topic);
     }
 
@@ -68,7 +70,7 @@ public class ResponseLayer {
             System.out.println("saved Response TopHeadLines");
             return newsJson;
         }
-        savedBucket.putIfAbsent("topHeadLines",new NewsOrgApi().getTopHeadLines());
+        savedBucket.putIfAbsent("topHeadLines",NewsOrgApi.getTopHeadLines());
         System.out.println("New Response Top HeadLines");
         return savedBucket.get("topHeadLines");
     }

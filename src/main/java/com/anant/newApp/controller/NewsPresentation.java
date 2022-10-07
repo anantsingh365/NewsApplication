@@ -2,16 +2,12 @@ package com.anant.newApp.controller;
 
 import com.anant.newApp.Entity.NewsCardEntity;
 import com.anant.newApp.Model.NewsCardModel;
-import com.anant.newApp.NewAppApplication;
 import com.anant.newApp.Service.NewsCardService;
 import com.anant.newApp.utils.ResponseLayer;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +47,7 @@ public class NewsPresentation {
     @ResponseBody
     public String scopeTestingSecond(HttpSession session){
         scopeTesting scopeTestingObject = (scopeTesting) session.getAttribute("Json Data entered by the user");
-        String string = "Welcome Back!!, You have entered the following url Data" + session.getAttribute("Json Data entered by the user").toString();
+        String string = "Welcome Back, You have entered the following url Data" + session.getAttribute("Json Data entered by the user").toString();
         System.out.println("Hashcode for the scopeTesting second page method should be equal to landing Page - " + scopeTestingObject.hashCode());
         System.out.println("session data is "+ scopeTestingObject.toString());
         return string;

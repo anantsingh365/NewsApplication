@@ -2,8 +2,8 @@ package com.anant.newApp.utils;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -12,12 +12,38 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Stores the JSON data representing the news fetched from NEWSAPI.org
+ * and Refreshes News Every 5 hours.
  */
 @Component
 public class ResponseLayer {
 
+    private static final Logger logger = LoggerFactory.getLogger(ResponseLayer.class);
     private static final Map<String, JSONObject> savedBucket = new ConcurrentHashMap<>();
     private static boolean bucketClearingStatus = false;
+
+    static{
+        logger.info("Init Response Bucket Refresh");
+        initRefresh();
+    }
+
+    public static void initRefresh(){
+        Runnable runnable = ()->{
+            while(true){
+                try {
+                    Thread.sleep(1000 * 60 * 60 * 5);
+                    // Thread.sleep(1000 * 30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                logger.info("Clearing Response Bucket");
+                ClearBucket();
+                logger.info("Clearing Bucket Done");
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
 
     public synchronized static void ClearBucket(){
         bucketClearingStatus = true;
@@ -44,18 +70,24 @@ public class ResponseLayer {
      * @see NewsOrgApi
      */
     public static JSONObject getResponeTopic(String topic) throws IOException, ParseException{
-        bucketClearingCheck();
-        JSONObject newsJson = savedBucket.get(topic);
-        if(newsJson != null) {
-            System.out.println("saved Response Topic " + topic);
-            return newsJson;
-        }
-        //context.getBean(NewsOrgApi.class);
-        System.out.println("Topic not cached, Generating and caching Topic");
-        savedBucket.putIfAbsent(topic,  NewsOrgApi.getSearchQuery(topic));
-        return savedBucket.get(topic);
+         return getNewsJson(topic);
     }
 
+    private static JSONObject getNewsJson(String Topic) throws IOException, ParseException{
+        bucketClearingCheck();
+        JSONObject newsJson = savedBucket.get(Topic);
+        if(newsJson != null){
+            System.out.println("saved Response " + Topic);
+            return newsJson;
+        }
+        if(Topic.equals("topHeadLines")){
+            savedBucket.putIfAbsent(Topic,NewsOrgApi.getTopHeadLines());
+        }else{
+            savedBucket.putIfAbsent(Topic,NewsOrgApi.getSearchQuery(Topic));
+        }
+        System.out.println("New Response " +Topic);
+        return savedBucket.get(Topic);
+    }
     /**
      * Return News data in Json format for top Headlines
      * @return json data representing news for top Headlines
@@ -64,14 +96,6 @@ public class ResponseLayer {
      * @see NewsOrgApi
      */
     public static JSONObject getResponseTopHeadLines() throws IOException, ParseException {
-        bucketClearingCheck();
-        JSONObject newsJson = savedBucket.get("topHeadLines");
-        if(newsJson != null){
-            System.out.println("saved Response TopHeadLines");
-            return newsJson;
-        }
-        savedBucket.putIfAbsent("topHeadLines",NewsOrgApi.getTopHeadLines());
-        System.out.println("New Response Top HeadLines");
-        return savedBucket.get("topHeadLines");
+        return getNewsJson("topHeadLines");
     }
 }

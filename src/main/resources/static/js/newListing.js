@@ -14,6 +14,7 @@ function deleteArticle(clicked_element){
     xhr.open("POST", deleteArticleUrl, true);
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
+   //  xhr.setRequestHeader("Authorization","Basic am9objoxMjM0NQ==");
 
     xhr.onReadyStateChange = function () {
       if (xhr.readyState === 4) {
@@ -22,6 +23,18 @@ function deleteArticle(clicked_element){
       }};
 
     let data = '{"url":"'+url+ '"}';
+    xhr.onload = function(){
+            console.log(xhr.responseText);
+                  // var response = JSON.parse(xhr.responseText);
+//                   if(xhr.status == 200) {
+//                       singleFileUploadError.style.display = "none";
+//                       singleFileUploadSuccess.innerHTML = "<p>File Uploaded Successfully.</p><p>DownloadUrl : <a href='" + response.fileDownloadUri + "' target='_blank'>" + response.fileDownloadUri + "</a></p>";
+//                       singleFileUploadSuccess.style.display = "block";
+//                   } else {
+//                       singleFileUploadSuccess.style.display = "none";
+//                       singleFileUploadError.innerHTML = (response && response.message) || "Some Error Occurred";
+//                   }
+    }
 
     xhr.send(data);
     console.log(xhr.status);

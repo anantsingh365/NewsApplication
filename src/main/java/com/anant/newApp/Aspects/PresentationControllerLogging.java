@@ -16,6 +16,6 @@ public class PresentationControllerLogging {
 
     @Before("execution(* com.anant.newApp.controller.NewsPresentation.topHeadLines(..))")
     public void beforeAddAccountAdvice() {
-        logger.log(Level.INFO,"This is Advice executing before Presentation controller Method!!");
+        logger.log(Level.INFO,"This is Advice executing before Presentation controller Method");
     }
 }

@@ -7,14 +7,32 @@ import com.anant.newApp.utils.ResponseLayer;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.core.ResolvableType;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Map;
 
 
 @Controller
@@ -62,6 +80,8 @@ public class NewsPresentation {
 
     @GetMapping(value = "/topHeadLines")
     public String topHeadLines(Model model) throws IOException, ParseException {
+      //  Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+      //  WebApplicationContext context2 = WebApplicationContextUtils.getWebApplicationContext(servletContext);
         JSONObject newsJson = ResponseLayer.getResponseTopHeadLines();
         NewsCardModel.makeTopHeadLineCards(newsJson, model);
         return "newsListing";

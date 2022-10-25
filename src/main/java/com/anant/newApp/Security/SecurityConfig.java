@@ -19,13 +19,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         var user = User.withUsername("gaurav")
                 .password("12345")
-                .authorities("read")
+                .authorities("USER")
                 .build();
 
         userDetailsService.createUser(user);
 
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(new BCryptPasswordEncoder(10));
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override

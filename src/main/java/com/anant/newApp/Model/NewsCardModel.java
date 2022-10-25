@@ -45,7 +45,8 @@ public class NewsCardModel {
             System.out.println("Couldn't find the news for the given topic");
         }
         JSONObject joArticles;
-        for(int i =0; i<cards.size(); i++){
+        int numOfCards = joArray.size();
+        for(int i =0; i<numOfCards; i++){
             //get Articles from JSON array and add the articles in the list
             joArticles = (JSONObject) joArray.get(i);
             cards.get(i).setArticleId(i);

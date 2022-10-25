@@ -19,16 +19,24 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -48,6 +56,9 @@ public class NewsPresentation {
 
     @GetMapping(value = "/")
     public String landingPage() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getName());
+        DelegatingFilterProxy proxy;
         return "home";
     }
 
@@ -72,7 +83,8 @@ public class NewsPresentation {
     }
 
     @GetMapping(value ="/topic{topic}")
-    public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException{
+    public String topic(@RequestParam("topic") String topic, Model model, HttpServletResponse res) throws IOException, ParseException{
+        res.setHeader("customHeader", "hoolhoola");
         JSONObject newsJson = ResponseLayer.getResponeTopic(topic);
         NewsCardModel.makeTopicCards(newsJson, model, topic);
         return "newsListing";

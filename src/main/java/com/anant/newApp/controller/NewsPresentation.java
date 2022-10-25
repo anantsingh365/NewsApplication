@@ -62,6 +62,11 @@ public class NewsPresentation {
         return "home";
     }
 
+    @GetMapping(value = "/redirectTest")
+    public String redirectTest(){
+        return "redirect:/topHeadLines";
+    }
+
     @PostMapping(value = "/scopeTestingLanding")
     public String scopeTestingLanding(@RequestBody JSONObject url, HttpSession session,@Autowired scopeTesting sessionObject){
         System.out.println("You entered this data" +url.toJSONString());

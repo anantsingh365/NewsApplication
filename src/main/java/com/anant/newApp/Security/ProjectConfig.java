@@ -60,12 +60,12 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.formLogin()
-//                .defaultSuccessUrl("/", true);
-//        http.authorizeRequests().anyRequest().authenticated();
-        http.httpBasic();
-        http.authorizeRequests()
-                .mvcMatchers("/").hasRole("ADMIN")
-                .mvcMatchers("/topHeadLines").hasRole("MANAGER");
+        http.formLogin()
+                .defaultSuccessUrl("/", true);
+        http.authorizeRequests().anyRequest().authenticated();
+//        http.httpBasic();
+//        http.authorizeRequests()
+//                .mvcMatchers("/").hasRole("ADMIN")
+//                .mvcMatchers("/topHeadLines").hasRole("MANAGER");
     }
 }

@@ -63,6 +63,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .defaultSuccessUrl("/", true);
         http.authorizeRequests().anyRequest().authenticated();
+        http.csrf().disable();
 //        http.httpBasic();
 //        http.authorizeRequests()
 //                .mvcMatchers("/").hasRole("ADMIN")

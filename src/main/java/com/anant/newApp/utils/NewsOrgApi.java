@@ -9,10 +9,7 @@ import java.net.URL;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,7 +21,6 @@ public class NewsOrgApi {
     private static String queryStringStatic;
     private static String topHeadLinesStringStatic;
 
-    // private static Logger logger = LoggerFactory.getLogger(NewsOrgApi.class);
     public NewsOrgApi(@Value("${NewsOrg.ApiKey}") String ApiKey, @Value("${NewsOrg.TopHeadLineUrl}") String TopHeadLineUrl,
                       @Value("${NewsOrg.SearchQueryUrl}") String SearchQueryUrl) {
         ApiKeyStatic = ApiKey;
@@ -56,7 +52,7 @@ public class NewsOrgApi {
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);

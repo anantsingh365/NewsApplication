@@ -1,6 +1,6 @@
 function saveArticle(clicked_element)
 {
-        let saveArticleUrl= "http://192.168.1.6:10000/" + "saveArticle?id=" + clicked_element.getAttribute('id');
+        let saveArticleUrl= "http://192.168.1.6:11000/" + "saveArticle?id=" + clicked_element.getAttribute('id');
         console.log(saveArticleUrl);
         let xmlHttpReq = new XMLHttpRequest();
          xmlHttpReq.open("GET", saveArticleUrl, false);
@@ -9,7 +9,7 @@ function saveArticle(clicked_element)
 }
 function deleteArticle(clicked_element){
     let url = clicked_element.getAttribute('url');
-    let deleteArticleUrl = "http://192.168.1.6:10000/deleteArticle";
+    let deleteArticleUrl = "http://192.168.1.6:11000/deleteArticle";
     var xhr = new XMLHttpRequest();
     xhr.open("POST", deleteArticleUrl, true);
     xhr.setRequestHeader("Accept", "application/json");

@@ -74,6 +74,7 @@ public class ResponseLayer {
     }
 
     private static JSONObject getNewsJson(String Topic) throws IOException, ParseException{
+
         bucketClearingCheck();
         JSONObject newsJson = savedBucket.get(Topic);
         if(newsJson != null){

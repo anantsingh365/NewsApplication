@@ -5,13 +5,6 @@ color: blue;
 color: green
 }
 
-.card{
-border: 2px solid red;
-border-radius: 4px;
-display: flex;
-justify-content: center;
-}
-
 .button {
   display: inline-block;
   border-radius: 4px;
@@ -44,7 +37,7 @@ justify-content: center;
 }
 
 .button:hover span {
-  padding-right: 25px;
+  padding-top: 25px;
 }
 
 .button:hover span:after {

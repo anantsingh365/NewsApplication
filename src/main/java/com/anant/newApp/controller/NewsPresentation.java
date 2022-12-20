@@ -7,33 +7,20 @@ import com.anant.newApp.utils.ResponseLayer;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.ObjectProvider;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.core.ResolvableType;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.Resource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Map;
 
+import java.io.IOException;
+import java.util.ArrayList;
 
 @Controller
 @SessionAttributes("articles")
@@ -48,7 +35,15 @@ public class NewsPresentation {
 
     @GetMapping(value = "/")
     public String landingPage() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getName());
+        DelegatingFilterProxy proxy;
         return "home";
+    }
+
+    @GetMapping(value = "/redirectTest")
+    public String redirectTest(){
+        return "updatedNewsListing";
     }
 
     @PostMapping(value = "/scopeTestingLanding")
@@ -72,7 +67,8 @@ public class NewsPresentation {
     }
 
     @GetMapping(value ="/topic{topic}")
-    public String topic(@RequestParam("topic") String topic, Model model) throws IOException, ParseException{
+    public String topic(@RequestParam("topic") String topic, Model model, HttpServletResponse res) throws IOException, ParseException{
+        res.setHeader("customHeader", "hoolhoola");
         JSONObject newsJson = ResponseLayer.getResponeTopic(topic);
         NewsCardModel.makeTopicCards(newsJson, model, topic);
         return "newsListing";
@@ -99,11 +95,13 @@ public class NewsPresentation {
         if (model == null) {
             return "no Item to save";
         }
+
         var cards = (ArrayList<NewsCardModel>) model.getAttribute("articles");
-        System.out.println("saving the " + id + "article");
         if (cards == null) {
             return "No id Provided";
         }
+
+        System.out.println("saving the " + id + "article");
         System.out.println(cards.get(id).getArticleId() + cards.get(id).getDescription() + cards.get(id).getTitle() + cards.get(id).getUrlToImage());
         var newsCard = cards.get(id);
         var entity = new NewsCardEntity();

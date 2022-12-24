@@ -98,7 +98,7 @@ public class NewsPresentation {
 
         var cards = (ArrayList<NewsCardModel>) model.getAttribute("articles");
         if (cards == null) {
-            return "No id Provided";
+            return "search for something first dummy";
         }
 
         System.out.println("saving the " + id + "article");

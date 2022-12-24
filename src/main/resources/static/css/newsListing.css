@@ -1,3 +1,9 @@
+body{
+
+    background-color:#ffe5ae;
+
+}
+
 .card-img-top{
     height: 400px;
     width: 600px;
@@ -25,9 +31,11 @@ img{
 #container{
 height: 5000px;
 display: flex;
-flex-direction: column;
+flex-direction: row;
 flex-wrap: wrap;
 margin: 20px auto;
+justify-content: center;
+
 }
 
 .container{

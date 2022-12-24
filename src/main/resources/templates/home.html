@@ -1,36 +1,24 @@
 <html>
 <head>
-<link rel = "stylesheet" href = "css/home.css">
-<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+  <link rel="stylesheet" href="css/home.css">
 </head>
-<body>
-<a href="/topic?topic=Climate+Change" class="btn btn-info" role="button">Climate change</a>
-<a href="/topic?topic=Sports" class="btn btn-info" role="button">Sports</a>
-<a href="/topic?topic=Electric+Cars" class="btn btn-info" role="button">Electric Cars</a>
-<a href="/topic?topic=India" class="btn btn-info" role="button">India</a>
 
-    <div class="container">
-      <div class="row height d-flex justify-content-center align-items-center">
-        <div class="col-md-8">
-          <div class="search">
-            <i class="fa fa-search"></i>
-            <form action = "/topic">
-              <input required type="search" name = "topic" class="form-control" placeholder="Search For Any Topic">
-              <button type="submit" class="btn btn-primary">Search</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+<div id = "searchContainer">
 
-<script src = "js/home.js"></script>
-<a href ="/topHeadLines">
-  <button class="button" style="vertical-align:middle"><span>Get Top Headlines </span></button>
-</a>
-</body>
+  <div id = "commonTopicContainer">
+
+    <a href="/topic?topic=Climate+Change">Climate change</a>
+    <a href="/topic?topic=Sports" >Sports</a>
+    <a href="/topic?topic=Electric+Cars" >Electric Cars</a>
+    <a href="/topic?topic=India" >India</a>
+
+  </div>
+
+  <form action = "/topic?">
+    <input required  type = "text" name="topic" placeholder = "Search for any topic"><br>
+    <button type="submit">Go</button>
+  </form>
+
+</div>
+
 </html>

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class NewsCardModel {
 
-    private static final int noOfCardsTopic = 100;
+    private static final int noOfCards = 100;
     private int ArticleId;
     private String title;
     private String description;
@@ -51,7 +51,7 @@ public class NewsCardModel {
 
     public static List<NewsCardModel> getCards(){
         var cards = new ArrayList<NewsCardModel>();
-        for(int i =0;i<noOfCardsTopic;i++){
+        for(int i = 0; i< noOfCards; i++){
             cards.add(new NewsCardModel());
         }
         return cards;

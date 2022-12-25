@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @Controller
-@SessionAttributes("articles")
+@SessionAttributes({"articles","loggedInUser"})
 public class NewsPresentation {
 
     /**
@@ -34,9 +34,10 @@ public class NewsPresentation {
     private NewsCardService newsCardService;
 
     @GetMapping(value = "/")
-    public String landingPage() {
+    public String landingPage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(auth.getName());
+        model.addAttribute("loggedInUser", auth.getName());
         DelegatingFilterProxy proxy;
         return "home";
     }

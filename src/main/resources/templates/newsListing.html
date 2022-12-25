@@ -12,7 +12,14 @@
 </head>
 <body>
 <script src = "js/newListing.js"></script>
-<h1 th:inline = "text">[[${pageTitle}]]</h1>
+
+<div id = "topBar">
+    <h1 id = "pageTitle" th:inline = "text">[[${pageTitle}]]</h1>
+    <h2 id = "loggedInUser" th:inline = "text">Hi, [[${loggedInUser}]]</h2>
+</div>
+<div id = "signOutButtonDiv">
+    <a id = "signOutButtonLink" href = "/logout">Sign Out</a>
+</div>
 
     <div id = "container" >
         <div class = "cardHolder" th:each="articles: ${articles}">

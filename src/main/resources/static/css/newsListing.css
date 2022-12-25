@@ -4,6 +4,43 @@ body{
 
 }
 
+#signOutButtonLink{
+    float: right;
+    display: block;
+}
+#signOutButtonDiv{
+    height: 20px;
+    margin-right: 25px;
+}
+
+#signOutButtonLink{
+
+        background-color: #1a93c7; /* Green */
+        border: none;
+        border-radius: 5px;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition-duration: 0.4s;
+}
+
+#topBar{
+margin: 25px;
+}
+
+h1,h2{
+display: inline;
+}
+h2{
+float: right;
+margin: 0;
+}
+
 .card-img-top{
     height: 400px;
     width: 600px;

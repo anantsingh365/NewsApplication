@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 @Controller
 @SessionAttributes({"articles","loggedInUser"})
@@ -42,31 +42,6 @@ public class NewsPresentation {
         return "home";
     }
 
-    @GetMapping(value = "/redirectTest")
-    public String redirectTest(){
-        return "updatedNewsListing";
-    }
-
-    @PostMapping(value = "/scopeTestingLanding")
-    public String scopeTestingLanding(@RequestBody JSONObject url, HttpSession session,@Autowired scopeTesting sessionObject){
-        System.out.println("You entered this data" +url.toJSONString());
-        System.out.println("Hashcode for session object created by spring is " + sessionObject.hashCode());
-        sessionObject.jsonUrlString = url.toJSONString();
-        session.setAttribute("Json Data entered by the user",sessionObject);
-
-        return "scopeLandingPage";
-    }
-
-    @GetMapping(value = "/scopTestingSecond")
-    @ResponseBody
-    public String scopeTestingSecond(HttpSession session){
-        scopeTesting scopeTestingObject = (scopeTesting) session.getAttribute("Json Data entered by the user");
-        String string = "Welcome Back, You have entered the following url Data" + session.getAttribute("Json Data entered by the user").toString();
-        System.out.println("Hashcode for the scopeTesting second page method should be equal to landing Page - " + scopeTestingObject.hashCode());
-        System.out.println("session data is "+ scopeTestingObject.toString());
-        return string;
-    }
-
     @GetMapping(value ="/topic{topic}")
     public String topic(@RequestParam("topic") String topic, Model model, HttpServletResponse res) throws IOException, ParseException{
         res.setHeader("customHeader", "hoolhoola");
@@ -77,8 +52,6 @@ public class NewsPresentation {
 
     @GetMapping(value = "/topHeadLines")
     public String topHeadLines(Model model) throws IOException, ParseException {
-      //  Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
-      //  WebApplicationContext context2 = WebApplicationContextUtils.getWebApplicationContext(servletContext);
         JSONObject newsJson = ResponseLayer.getResponseTopHeadLines();
         NewsCardModel.makeTopHeadLineCards(newsJson, model);
         return "newsListing";
@@ -98,6 +71,9 @@ public class NewsPresentation {
         }
 
         var cards = (ArrayList<NewsCardModel>) model.getAttribute("articles");
+        Class<?> clazz = model.getAttribute("articles").getClass();
+        System.out.println(clazz.getName());
+
         if (cards == null) {
             return "search for something first dummy";
         }

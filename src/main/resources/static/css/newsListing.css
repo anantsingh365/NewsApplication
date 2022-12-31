@@ -4,13 +4,31 @@ body{
 
 }
 
+#articleSavedSuccessToast{
+
+    width: 200px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background: white;
+    border: 1px solid grey;
+    border-radius: 4%;
+    visibility: hidden;
+}
+
 #signOutButtonLink{
     float: right;
     display: block;
 }
 #signOutButtonDiv{
-    height: 20px;
+    height: 50px;
     margin-right: 25px;
+    position: sticky;
+    top: 20px;
 }
 
 #signOutButtonLink{
@@ -66,13 +84,11 @@ img{
 }
 
 #container{
-height: 5000px;
 display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 margin: 20px auto;
 justify-content: center;
-
 }
 
 .container{

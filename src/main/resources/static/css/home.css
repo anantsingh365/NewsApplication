@@ -1,14 +1,10 @@
 body{
-
     background-color:#ffe5ae;
-
 }
 
 #searchContainer{
-
     margin: 150px auto 0;
     max-width: 700px;
-
 }
 
 *{
@@ -16,15 +12,14 @@ body{
 }
 
 #commonTopicContainer{
-
     display:flex;
     justify-content: center;
     margin-bottom: 10px;
 }
 
 #commonTopicContainer > *{
-
     background-color: #1a93c7; /* Green */
+    transition: 0.4s;
     border: none;
     border-radius: 5px;
     color: white;
@@ -35,23 +30,18 @@ body{
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-
 }
 
 #commonTopicContainer > *:hover{
-
     background-color: #446aca;
-
+    transition: 0.4s;
 }
 
 a{
-
     margin: 0 5px;
-
 }
 
 input[type="text"]{
-
     text-align: center;
     width: -webkit-fill-available;
     height: 50px;
@@ -82,6 +72,7 @@ button[type="submit"]{
     margin: 10px auto;
 
     background-color: #39db8f; /* Green */
+    transition-duration: 0.4s;
     border: none;
     border-radius: 5px;
     color: white;
@@ -90,4 +81,8 @@ button[type="submit"]{
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
+}
+button[type="submit"]:hover{
+    background-color: #1fad6b;
+    transition-duration: 0.4s;
 }

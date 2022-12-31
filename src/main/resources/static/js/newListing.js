@@ -6,7 +6,34 @@ function saveArticle(clicked_element)
          xmlHttpReq.open("GET", saveArticleUrl, false);
          xmlHttpReq.send(null);
          console.log(xmlHttpReq.responseText);
+         console.log(xmlHttpReq.status);
+
+         if(xmlHttpReq.status === 200){
+            makeSuccessToast();
+            setTimeout(function(){
+              deleteSuccessToast();
+            }, 3000);
+
+         }
+        else{
+          //To do failed article saved toast
+        }
+
 }
+
+function makeSuccessToast(){
+    var articleSavedSuccessToast = document.getElementById("articleSavedSuccessToast");
+    articleSavedSuccessToast.style.visibility = 'visible';
+    //deleteSuccessToast();
+}
+
+function deleteSuccessToast(){
+
+  var articleSavedSuccessToast = document.getElementById("articleSavedSuccessToast");
+    articleSavedSuccessToast.style.visibility = 'hidden';
+
+}
+
 function deleteArticle(clicked_element){
     let url = clicked_element.getAttribute('url');
     let deleteArticleUrl = "http://192.168.1.6:11000/deleteArticle";
@@ -25,15 +52,7 @@ function deleteArticle(clicked_element){
     let data = '{"url":"'+url+ '"}';
     xhr.onload = function(){
             console.log(xhr.responseText);
-                  // var response = JSON.parse(xhr.responseText);
-//                   if(xhr.status == 200) {
-//                       singleFileUploadError.style.display = "none";
-//                       singleFileUploadSuccess.innerHTML = "<p>File Uploaded Successfully.</p><p>DownloadUrl : <a href='" + response.fileDownloadUri + "' target='_blank'>" + response.fileDownloadUri + "</a></p>";
-//                       singleFileUploadSuccess.style.display = "block";
-//                   } else {
-//                       singleFileUploadSuccess.style.display = "none";
-//                       singleFileUploadError.innerHTML = (response && response.message) || "Some Error Occurred";
-//                   }
+
     }
 
     xhr.send(data);

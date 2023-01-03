@@ -9,11 +9,13 @@ function saveArticle(clicked_element)
          console.log(xmlHttpReq.status);
 
          if(xmlHttpReq.status === 200){
-            makeSuccessToast();
-            setTimeout(function(){
-              deleteSuccessToast();
-            }, 3000);
+          var toastElemId = "articleSavedSuccessToast";
+          var toastInnerHtmlMessage = "<span>Article Saved Successfully!</span>";
 
+          showToast(toastElemId);
+            setTimeout(function(){
+              HideSuccessToast();
+            }, 3000);
          }
         else{
           //To do failed article saved toast
@@ -21,18 +23,21 @@ function saveArticle(clicked_element)
 
 }
 
-function makeSuccessToast(){
-    var articleSavedSuccessToast = document.getElementById("articleSavedSuccessToast");
-    articleSavedSuccessToast.style.visibility = 'visible';
-    //deleteSuccessToast();
-}
+function showToast(elemId){
 
-function deleteSuccessToast(){
-
-  var articleSavedSuccessToast = document.getElementById("articleSavedSuccessToast");
-    articleSavedSuccessToast.style.visibility = 'hidden';
+var toastElem = document.getElementById(elemId);
+toastElem.style.visibility = 'visible';
 
 }
+
+function HideSuccessToast(){
+
+  var toastElem = document.getElementById("articleSavedSuccessToast");
+  toastElem.style.visibility = 'hidden';
+
+}
+
+
 
 function deleteArticle(clicked_element){
     let url = clicked_element.getAttribute('url');
@@ -52,7 +57,6 @@ function deleteArticle(clicked_element){
     let data = '{"url":"'+url+ '"}';
     xhr.onload = function(){
             console.log(xhr.responseText);
-
     }
 
     xhr.send(data);

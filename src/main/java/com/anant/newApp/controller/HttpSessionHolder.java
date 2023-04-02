@@ -32,12 +32,14 @@ public class HttpSessionHolder {
             public void sessionCreated(HttpSessionEvent hse) {
                 sessions.put(hse.getSession().getId(), hse.getSession());
                 ++numOfSessions;
+                System.out.println("session id for new session" + hse.getSession().getId());
                 System.out.println("A Session is Created, total num of sessions " + numOfSessions);
             }
 
             @Override
             public void sessionDestroyed(HttpSessionEvent hse) {
                 sessions.remove(hse.getSession().getId());
+                System.out.println(hse.getSession().getId());
                 --numOfSessions;
                 System.out.println("A session is destroyed, total num of sessions, " + numOfSessions);
             }

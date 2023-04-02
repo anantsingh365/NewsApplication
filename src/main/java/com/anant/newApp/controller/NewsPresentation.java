@@ -42,9 +42,16 @@ public class NewsPresentation {
         return "home";
     }
 
+    @GetMapping("/file")
+    public String filePage(){
+        return "fileHandling";
+    }
+
+
     @GetMapping(value ="/topic{topic}")
     public String topic(@RequestParam("topic") String topic, Model model, HttpServletResponse res) throws IOException, ParseException{
         res.setHeader("customHeader", "hoolhoola");
+
         JSONObject newsJson = ResponseLayer.getResponeTopic(topic);
         NewsCardModel.makeTopicCards(newsJson, model, topic);
         return "newsListing";

@@ -4,7 +4,11 @@ function saveArticle(clicked_element)
         console.log(saveArticleUrl);
         let xmlHttpReq = new XMLHttpRequest();
          xmlHttpReq.open("GET", saveArticleUrl, false);
-         xmlHttpReq.send(null);
+        xmlHttpReq.onload = function(){
+                console.log("inside onload function")
+                    console.log(xmlHttpReq.responseText);
+            }
+         xmlHttpReq.send();
          console.log(xmlHttpReq.responseText);
          console.log(xmlHttpReq.status);
 
@@ -65,5 +69,4 @@ function deleteArticle(clicked_element){
     let cardId = clicked_element.getAttribute('id');
     const cardToDelete = document.getElementById(cardId);
     cardToDelete.remove();
-
 }

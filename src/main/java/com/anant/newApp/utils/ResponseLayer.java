@@ -12,14 +12,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Stores the JSON data representing the news fetched from NEWSAPI.org
- * and Refreshes News Every 5 hours.
+ * and Refreshes News Every  30 minutes.
  */
 @Component
 public class ResponseLayer {
 
     private static final Logger logger = LoggerFactory.getLogger(ResponseLayer.class);
     private static final Map<String, JSONObject> savedBucket = new ConcurrentHashMap<>();
-    private static boolean bucketClearingStatus = false;
+    private static volatile boolean bucketClearingStatus = false;
 
     static{
         logger.info("Init Response Bucket Refresh");
@@ -30,7 +30,7 @@ public class ResponseLayer {
         Runnable runnable = ()->{
             while(true){
                 try {
-                    Thread.sleep(1000 * 60 * 60 * 5);
+                    Thread.sleep(1000 * 60 * 30);
                     // Thread.sleep(1000 * 30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -74,7 +74,7 @@ public class ResponseLayer {
     }
 
     private static JSONObject getNewsJson(String Topic) throws IOException, ParseException{
-
+        // block until bucket is refreshed
         bucketClearingCheck();
         JSONObject newsJson = savedBucket.get(Topic);
         if(newsJson != null){
